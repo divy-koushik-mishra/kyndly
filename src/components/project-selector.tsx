@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronsUpDown, Plus } from "lucide-react";
+import { Check, ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,6 +13,8 @@ import {
 import { api } from "@/trpc/react";
 import { useRouter } from "next/navigation";
 import { useSelectedProject } from "@/lib/use-selected-project";
+import { CreateProjectDialog } from "./create-project-dialog";
+import { selectProject as selectProjectAction } from "@/app/actions/select-project";
 
 interface ProjectSelectorProps {
   initialProjects?: Array<{ id: string; projectName: string }>;
@@ -29,8 +31,9 @@ export function ProjectSelector({ initialProjects = [], initialSelectedId }: Pro
 
   const { selectedProject, selectProject } = useSelectedProject(projects, initialSelectedId);
 
-  const handleSelectProject = (projectId: string) => {
+  const handleSelectProject = async (projectId: string) => {
     selectProject(projectId);
+    await selectProjectAction(projectId);
     router.refresh();
   };
 
@@ -79,10 +82,14 @@ export function ProjectSelector({ initialProjects = [], initialSelectedId }: Pro
           </DropdownMenuItem>
         ))}
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer text-purple-400">
-          <Plus className="mr-2 h-4 w-4" />
-          <span>New Project</span>
-        </DropdownMenuItem>
+        <CreateProjectDialog>
+          <DropdownMenuItem
+            className="cursor-pointer text-purple-400"
+            onSelect={(e) => e.preventDefault()}
+          >
+            <span>New Project</span>
+          </DropdownMenuItem>
+        </CreateProjectDialog>
       </DropdownMenuContent>
     </DropdownMenu>
   );

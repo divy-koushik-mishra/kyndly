@@ -3,10 +3,11 @@ import { redirect } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import { DashboardLayout } from "@/components/dashboard-layout";
 import { api } from "@/trpc/server";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Plus, Search, Filter, Star, MoreVertical, Eye, Edit, Trash2, CheckCircle } from "lucide-react";
+import { Star } from "lucide-react";
+import { CreateReviewDialog } from "@/components/create-review-dialog";
+import { EditReviewDialog } from "@/components/edit-review-dialog";
+import { DeleteReviewDialog } from "@/components/delete-review-dialog";
 
 export default async function ReviewsPage() {
   const session = await auth();
@@ -17,72 +18,53 @@ export default async function ReviewsPage() {
 
   // Fetch projects server-side
   const projects = await api.user.getUserProject();
-  const selectedProjectId = projects[0]?.id;
+  const { getSelectedProjectId } = await import("@/lib/selected-project");
+  const selectedProjectId = await getSelectedProjectId(projects);
 
-  // Mock reviews data
-  const reviews = [
-    {
-      id: "1",
-      author: "Sarah Johnson",
-      email: "sarah.j@example.com",
-      rating: 5,
-      text: "Excellent service! The product exceeded my expectations. Very satisfied with the quality and customer support.",
-      app: "Main Website",
-      status: "published",
-      date: "2024-01-15",
-      verified: true,
-    },
-    {
-      id: "2",
-      author: "Michael Chen",
-      email: "m.chen@example.com",
-      rating: 5,
-      text: "Very satisfied with the quality and customer support. Highly recommend to anyone looking for a reliable solution.",
-      app: "Main Website",
-      status: "published",
-      date: "2024-01-14",
-      verified: true,
-    },
-    {
-      id: "3",
-      author: "Emma Davis",
-      email: "emma.d@example.com",
-      rating: 4,
-      text: "Great overall experience! The interface is intuitive and the features are exactly what I needed.",
-      app: "iOS App",
-      status: "published",
-      date: "2024-01-13",
-      verified: false,
-    },
-    {
-      id: "4",
-      author: "James Wilson",
-      email: "j.wilson@example.com",
-      rating: 5,
-      text: "Outstanding product! Worth every penny. The attention to detail is impressive.",
-      app: "Main Website",
-      status: "pending",
-      date: "2024-01-12",
-      verified: true,
-    },
-    {
-      id: "5",
-      author: "Olivia Martinez",
-      email: "olivia.m@example.com",
-      rating: 4,
-      text: "Good experience overall. A few minor issues but customer support was very helpful.",
-      app: "Android App",
-      status: "published",
-      date: "2024-01-11",
-      verified: false,
-    },
-  ];
+  // If no projects exist, redirect to dashboard
+  if (projects.length === 0) {
+    redirect("/dashboard");
+  }
+
+  // Fetch reviews for selected project
+  let reviews: Array<{
+    id: string;
+    authorName: string;
+    rating: number;
+    text: string;
+    avatarUrl: string;
+    createdAt: Date;
+  }> = [];
+
+  if (selectedProjectId) {
+    reviews = await api.review.getByProject({ projectId: selectedProjectId });
+  }
+
+  // Calculate stats
+  const totalReviews = reviews.length;
+  const avgRating = totalReviews > 0
+    ? (reviews.reduce((sum, r) => sum + r.rating, 0) / totalReviews).toFixed(1)
+    : "0.0";
+  const fiveStarCount = reviews.filter(r => r.rating === 5).length;
+  const publishedCount = totalReviews; // All reviews are published
+
+  // Helper function to format date
+  const getTimeAgo = (date: Date) => {
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    
+    if (days > 0) return `${days} day${days > 1 ? 's' : ''} ago`;
+    if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    return 'Just now';
+  };
 
   const stats = [
-    { label: "Total Reviews", value: "324", color: "from-purple-500 to-pink-500" },
-    { label: "Avg Rating", value: "4.9", color: "from-amber-500 to-orange-500" },
-    { label: "Published", value: "298", color: "from-emerald-500 to-teal-500" },
-    { label: "Pending", value: "26", color: "from-blue-500 to-cyan-500" },
+    { label: "Total Reviews", value: totalReviews.toString(), color: "from-purple-500 to-pink-500" },
+    { label: "Avg Rating", value: avgRating, color: "from-amber-500 to-orange-500" },
+    { label: "5 Stars", value: fiveStarCount.toString(), color: "from-emerald-500 to-teal-500" },
+    { label: "Published", value: publishedCount.toString(), color: "from-blue-500 to-cyan-500" },
   ];
 
   return (
@@ -98,10 +80,9 @@ export default async function ReviewsPage() {
                 Manage and moderate customer testimonials
               </p>
             </div>
-            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg w-full sm:w-auto">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Review
-            </Button>
+            {selectedProjectId && (
+              <CreateReviewDialog projectId={selectedProjectId} />
+            )}
           </div>
 
           {/* Stats */}
@@ -121,132 +102,91 @@ export default async function ReviewsPage() {
             ))}
           </div>
 
-          {/* Filters */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-              <Input
-                placeholder="Search reviews..."
-                className="pl-10 bg-slate-900/90 border-slate-700/50 text-white"
-              />
+          {/* Empty State */}
+          {reviews.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-16 text-center">
+              <div className="w-20 h-20 rounded-full bg-slate-800/50 flex items-center justify-center mb-4">
+                <Star className="h-10 w-10 text-amber-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">No reviews yet</h3>
+              <p className="text-slate-400 mb-6">Start collecting testimonials from your customers</p>
+              {selectedProjectId && (
+                <CreateReviewDialog projectId={selectedProjectId} />
+              )}
             </div>
-            <Button variant="outline" className="w-full sm:w-auto">
-              <Filter className="h-4 w-4 mr-2" />
-              Filter
-            </Button>
-          </div>
-
-          {/* Reviews List */}
-          <div className="space-y-4">
-            {reviews.map((review) => (
-              <Card
-                key={review.id}
-                className="border border-slate-700/50 bg-slate-900/90 backdrop-blur-xl p-6 hover:border-slate-600/50 transition-colors"
-              >
-                <div className="space-y-4">
-                  {/* Header */}
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-semibold text-lg">
-                        {review.author.charAt(0)}
+          ) : (
+            <>
+              {/* Reviews List */}
+              <div className="space-y-4">
+                {reviews.map((review) => (
+                  <Card
+                    key={review.id}
+                    className="border border-slate-700/50 bg-slate-900/90 backdrop-blur-xl p-6 hover:border-slate-600/50 transition-all duration-200"
+                  >
+                    <div className="flex gap-4">
+                      {/* Avatar */}
+                      <div className="flex-shrink-0">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={review.avatarUrl}
+                          alt={review.authorName}
+                          className="w-12 h-12 rounded-full"
+                        />
                       </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-semibold text-white">{review.author}</h3>
-                          {review.verified && (
-                            <CheckCircle className="h-4 w-4 text-blue-400" />
-                          )}
-                          <span
-                            className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                              review.status === "published"
-                                ? "bg-emerald-500/20 text-emerald-400"
-                                : "bg-amber-500/20 text-amber-400"
-                            }`}
-                          >
-                            {review.status}
+
+                      <div className="flex-1 space-y-3">
+                        {/* Header */}
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <h3 className="font-semibold text-white">{review.authorName}</h3>
+                            <p className="text-sm text-slate-400">{getTimeAgo(review.createdAt)}</p>
+                          </div>
+                        </div>
+
+                        {/* Rating */}
+                        <div className="flex items-center gap-1">
+                          {Array.from({ length: 5 }, (_, i) => (
+                            <Star
+                              key={i}
+                              className={`h-4 w-4 ${
+                                i < review.rating
+                                  ? "fill-amber-400 text-amber-400"
+                                  : "text-slate-600"
+                              }`}
+                            />
+                          ))}
+                          <span className="ml-2 text-sm text-slate-400">
+                            {review.rating}.0
                           </span>
                         </div>
-                        <p className="text-sm text-slate-400">{review.email}</p>
-                        <div className="flex items-center gap-3 mt-1">
-                          <div className="flex items-center gap-1">
-                            {Array.from({ length: 5 }).map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`h-4 w-4 ${
-                                  i < review.rating
-                                    ? "fill-amber-400 text-amber-400"
-                                    : "text-slate-600"
-                                }`}
-                              />
-                            ))}
-                          </div>
-                          <span className="text-xs text-slate-500">•</span>
-                          <span className="text-xs text-slate-500">{review.app}</span>
-                          <span className="text-xs text-slate-500">•</span>
-                          <span className="text-xs text-slate-500">{review.date}</span>
+
+                        {/* Review Text */}
+                        <p className="text-slate-300 leading-relaxed">
+                          {review.text}
+                        </p>
+
+                        {/* Footer */}
+                        <div className="flex flex-wrap items-center justify-end gap-2 pt-3 border-t border-slate-800">
+                          <EditReviewDialog
+                            review={{
+                              id: review.id,
+                              authorName: review.authorName,
+                              rating: review.rating,
+                              text: review.text,
+                            }}
+                          />
+                          <DeleteReviewDialog
+                            reviewId={review.id}
+                            authorName={review.authorName}
+                          />
                         </div>
                       </div>
                     </div>
-                    <button className="p-2 rounded-lg hover:bg-slate-800 transition-colors">
-                      <MoreVertical className="h-4 w-4 text-slate-400" />
-                    </button>
-                  </div>
-
-                  {/* Review Text */}
-                  <p className="text-slate-300 leading-relaxed">{review.text}</p>
-
-                  {/* Actions */}
-                  <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-800/50">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                    >
-                      <Eye className="h-3 w-3 mr-1" />
-                      View
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                    >
-                      <Edit className="h-3 w-3 mr-1" />
-                      Edit
-                    </Button>
-                    {review.status === "pending" && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="border-emerald-600 text-emerald-400 hover:bg-emerald-500/10"
-                      >
-                        <CheckCircle className="h-3 w-3 mr-1" />
-                        Approve
-                      </Button>
-                    )}
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="border-red-600 text-red-400 hover:bg-red-500/10 ml-auto"
-                    >
-                      <Trash2 className="h-3 w-3 mr-1" />
-                      Delete
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-
-          {/* Pagination */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-slate-400">Showing 1-5 of 324 reviews</p>
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm">
-                Previous
-              </Button>
-              <Button variant="outline" size="sm">
-                Next
-              </Button>
-            </div>
-          </div>
+                  </Card>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </DashboardLayout>
     </>

@@ -2,10 +2,12 @@ import { auth } from "@/server/auth";
 import { redirect } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import { DashboardLayout } from "@/components/dashboard-layout";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Plus, MoreVertical, ExternalLink, Settings, Trash2 } from "lucide-react";
+import { MoreVertical, ExternalLink } from "lucide-react";
 import { api } from "@/trpc/server";
+import { CreateAppDialog } from "@/components/create-app-dialog";
+import { AppSettingsDialog } from "@/components/app-settings-dialog";
+import { Button } from "@/components/ui/button";
 
 export default async function AppsPage() {
   const session = await auth();
@@ -16,7 +18,8 @@ export default async function AppsPage() {
 
   // Fetch projects and apps server-side
   const projects = await api.user.getUserProject();
-  const selectedProjectId = projects[0]?.id;
+  const { getSelectedProjectId } = await import("@/lib/selected-project");
+  const selectedProjectId = await getSelectedProjectId(projects);
 
   let apps: Array<{
     id: string;
@@ -31,6 +34,11 @@ export default async function AppsPage() {
 
   if (selectedProjectId) {
     apps = await api.user.getProjectApps({ projectId: selectedProjectId });
+  }
+
+  // If no projects exist, redirect to dashboard
+  if (projects.length === 0) {
+    redirect("/dashboard");
   }
 
   // Helper function to format date
@@ -58,10 +66,11 @@ export default async function AppsPage() {
                 Manage your apps and configure testimonial widgets
               </p>
             </div>
-            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg w-full sm:w-auto">
-              <Plus className="h-4 w-4 mr-2" />
-              Add New App
-            </Button>
+            {selectedProjectId && (
+              <CreateAppDialog projectId={selectedProjectId}>
+                <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg w-full sm:w-auto" />
+              </CreateAppDialog>
+            )}
           </div>
 
           {/* Empty State */}
@@ -72,10 +81,9 @@ export default async function AppsPage() {
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">No apps yet</h3>
               <p className="text-slate-400 mb-6">Get started by creating your first app</p>
-              <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white">
-                <Plus className="h-4 w-4 mr-2" />
-                Create Your First App
-              </Button>
+              {selectedProjectId && (
+                <CreateAppDialog projectId={selectedProjectId} />
+              )}
             </div>
           ) : (
             <>
@@ -128,19 +136,23 @@ export default async function AppsPage() {
 
                       {/* Actions */}
                       <div className="flex gap-2">
+                        <AppSettingsDialog
+                          app={{
+                            id: app.id,
+                            name: app.name,
+                            platform: app.platform,
+                            domain: app.domain,
+                            description: app.description,
+                          }}
+                        />
                         <Button
                           variant="outline"
                           size="sm"
-                          className="flex-1"
+                          asChild
                         >
-                          <Settings className="h-3 w-3 mr-1" />
-                          Configure
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                        >
-                          <ExternalLink className="h-3 w-3" />
+                          <a href={`https://${app.domain}`} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="h-3 w-3" />
+                          </a>
                         </Button>
                       </div>
                     </div>
@@ -148,21 +160,25 @@ export default async function AppsPage() {
                 ))}
 
                 {/* Add New Card */}
-                <Card className="border-2 border-dashed border-slate-700/50 bg-slate-900/50 backdrop-blur-xl p-6 hover:border-purple-500/50 transition-all duration-200 cursor-pointer group">
-                  <div className="h-full flex flex-col items-center justify-center space-y-4 text-center">
-                    <div className="w-16 h-16 rounded-full bg-slate-800/50 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-                      <Plus className="h-8 w-8 text-slate-400 group-hover:text-purple-400 transition-colors" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-white group-hover:text-purple-400 transition-colors">
-                        Add New App
-                      </h3>
-                      <p className="text-sm text-slate-400 mt-1">
-                        Configure a new testimonial widget
-                      </p>
-                    </div>
-                  </div>
-                </Card>
+                {selectedProjectId && (
+                  <CreateAppDialog projectId={selectedProjectId}>
+                    <Card className="border-2 border-dashed border-slate-700/50 bg-slate-900/50 backdrop-blur-xl p-6 hover:border-purple-500/50 transition-all duration-200 cursor-pointer group">
+                      <div className="h-full flex flex-col items-center justify-center space-y-4 text-center min-h-[200px]">
+                        <div className="w-16 h-16 rounded-full bg-slate-800/50 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                          <span className="text-4xl">➕</span>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-white group-hover:text-purple-400 transition-colors">
+                            Add New App
+                          </h3>
+                          <p className="text-sm text-slate-400 mt-1">
+                            Configure a new testimonial widget
+                          </p>
+                        </div>
+                      </div>
+                    </Card>
+                  </CreateAppDialog>
+                )}
               </div>
             </>
           )}

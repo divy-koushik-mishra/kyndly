@@ -14,7 +14,8 @@ export default async function IntegrationPage() {
 
   // Fetch projects server-side
   const projects = await api.user.getUserProject();
-  const selectedProjectId = projects[0]?.id;
+  const { getSelectedProjectId } = await import("@/lib/selected-project");
+  const selectedProjectId = await getSelectedProjectId(projects);
 
   return (
     <>
