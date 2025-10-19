@@ -13,7 +13,7 @@ export default function Home() {
         <Button
           variant={"outline"}
           aria-label="Sign in"
-          className="text-black hover:bg-white/90"
+          className=""
         >
           Get Started <ArrowRight />
         </Button>
