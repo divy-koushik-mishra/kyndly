@@ -15,13 +15,13 @@ export default async function SignUpPage() {
     <main className="flex min-h-screen w-full items-center justify-center">
       <div className="flex w-full max-w-md flex-col items-center gap-2 rounded-xl border border-zinc-800 bg-black p-8 shadow-lg shadow-neutral-700">
         <h2 className="text-center text-2xl font-medium">Welcome to Kyndly</h2>
-        <p className="text-center text-sm font-light tracking-wider text-muted-foreground">
+        <p className="text-muted-foreground text-center text-sm font-light tracking-wider">
           Sign in using your Google account
         </p>
         <form
           action={async () => {
             "use server";
-            await signIn("google", { redirectTo: "/dashboard" });
+            await signIn("google", { redirectTo: "/onboarding" });
           }}
         >
           <Button
