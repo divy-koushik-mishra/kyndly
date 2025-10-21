@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { SEOHead } from "@/components/seo-head";
 import { 
   ArrowRight, 
   Star, 
@@ -18,6 +17,45 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { auth } from "@/server/auth";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Kyndly - Review Management Software | Collect & Showcase Customer Reviews",
+  description: "Transform customer feedback into powerful social proof with Kyndly. Collect, manage, and display reviews with our plug-and-play system. Boost credibility and conversions - start free today.",
+  keywords: "review management, customer reviews, testimonial software, review widget, customer feedback, review analytics, testimonial management, social proof, review collection",
+  openGraph: {
+    title: "Kyndly - Review Management Software | Collect & Showcase Customer Reviews",
+    description: "Transform customer feedback into powerful social proof with Kyndly. Collect, manage, and display reviews with our plug-and-play system. Boost credibility and conversions - start free today.",
+    url: "https://kyndly.online",
+    siteName: "Kyndly",
+    type: "website",
+    images: [
+      {
+        url: "https://kyndly.online/images/kyndly-social.png",
+        width: 1200,
+        height: 630,
+        alt: "Kyndly - Review Management Software",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kyndly - Review Management Software | Collect & Showcase Customer Reviews",
+    description: "Transform customer feedback into powerful social proof with Kyndly. Collect, manage, and display reviews with our plug-and-play system. Boost credibility and conversions - start free today.",
+    images: ["https://kyndly.online/images/kyndly-social.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  alternates: {
+    canonical: "https://kyndly.online",
+  },
+};
 
 export default async function Home() {
   const structuredData = {
@@ -52,12 +90,11 @@ export default async function Home() {
 
   return (
     <>
-      <SEOHead
-        title="Kyndly - Review Management Software | Collect & Showcase Customer Reviews"
-        description="Collect, manage, and display customer reviews with Kyndly. The plug-and-play review system that boosts credibility and conversions. Start free trial today."
-        keywords="review management, customer reviews, testimonial software, review widget, customer feedback, review analytics, testimonial management"
-        canonicalUrl="/"
-        structuredData={structuredData}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
       />
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
       {/* Navigation */}

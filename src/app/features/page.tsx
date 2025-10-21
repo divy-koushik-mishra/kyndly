@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { SEOHead } from "@/components/seo-head";
 import { 
   MessageSquare, 
   BarChart3, 
@@ -19,6 +18,28 @@ import {
   Play
 } from "lucide-react";
 import Link from "next/link";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Features - Review Management Software | Kyndly",
+  description: "Discover Kyndly's comprehensive review management features. Collect, analyze, and display customer reviews with advanced tools for review collection, analytics, widgets, and moderation.",
+  keywords: "review management features, testimonial software features, review collection tools, review analytics, review widgets, customer feedback management",
+  openGraph: {
+    title: "Features - Review Management Software | Kyndly",
+    description: "Discover Kyndly's comprehensive review management features. Collect, analyze, and display customer reviews with advanced tools for review collection, analytics, widgets, and moderation.",
+    url: "https://kyndly.online/features",
+    siteName: "Kyndly",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Features - Review Management Software | Kyndly",
+    description: "Discover Kyndly's comprehensive review management features. Collect, analyze, and display customer reviews with advanced tools for review collection, analytics, widgets, and moderation.",
+  },
+  alternates: {
+    canonical: "https://kyndly.online/features",
+  },
+};
 
 export default function FeaturesPage() {
   const structuredData = {
@@ -43,12 +64,11 @@ export default function FeaturesPage() {
 
   return (
     <>
-      <SEOHead
-        title="Features - Review Management Software | Kyndly"
-        description="Discover Kyndly's comprehensive review management features. Collect, analyze, and display customer reviews with advanced tools for review collection, analytics, widgets, and moderation."
-        keywords="review management features, testimonial software features, review collection tools, review analytics, review widgets, customer feedback management"
-        canonicalUrl="/features"
-        structuredData={structuredData}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
       />
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
         {/* Navigation */}
