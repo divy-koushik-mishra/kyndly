@@ -13,7 +13,7 @@ export function NoProjectsState() {
         Welcome to Kyndly!
       </h2>
       <p className="text-slate-400 mb-8 max-w-md">
-        Get started by creating your first project. You'll be able to add apps, 
+        Get started by creating your first project. You&apos;ll be able to add apps, 
         collect testimonials, and manage reviews all in one place.
       </p>
       <CreateProjectDialog />

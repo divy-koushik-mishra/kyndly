@@ -34,7 +34,7 @@ export function AppSettingsDialog({ app, children }: AppSettingsDialogProps) {
   const [platform, setPlatform] = useState<"web" | "mobile">(app.platform as "web" | "mobile");
   const [name, setName] = useState(app.name);
   const [domain, setDomain] = useState(app.domain);
-  const [description, setDescription] = useState(app.description || "");
+  const [description, setDescription] = useState(app.description ?? "");
   const router = useRouter();
 
   // Reset form when dialog opens or app changes
@@ -43,7 +43,7 @@ export function AppSettingsDialog({ app, children }: AppSettingsDialogProps) {
       setPlatform(app.platform as "web" | "mobile");
       setName(app.name);
       setDomain(app.domain);
-      setDescription(app.description || "");
+      setDescription(app.description ?? "");
     }
   }, [open, app]);
 

@@ -7,7 +7,7 @@ export function useSelectedProject(
   initialSelectedId?: string
 ) {
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
-    initialSelectedId || projects[0]?.id || null
+    initialSelectedId ?? projects[0]?.id ?? null
   );
 
   // Load from localStorage on mount
@@ -30,7 +30,7 @@ export function useSelectedProject(
   return {
     selectedProjectId,
     selectProject,
-    selectedProject: projects.find((p) => p.id === selectedProjectId) || projects[0],
+    selectedProject: projects.find((p) => p.id === selectedProjectId) ?? projects[0],
   };
 }
 

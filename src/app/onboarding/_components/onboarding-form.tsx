@@ -151,8 +151,8 @@ export function OnboardingForm() {
                     Welcome to Kyndly
                   </h1>
                   <p className="text-lg text-slate-300 max-w-md mx-auto font-light">
-                    Let's set up your first project in just a few simple steps.
-                    It'll only take a minute!
+                    Let&apos;s set up your first project in just a few simple steps.
+                    It&apos;ll only take a minute!
                   </p>
                 </div>
                 <div className="pt-4">
@@ -382,7 +382,7 @@ export function OnboardingForm() {
                     Review & Confirm
                   </h2>
                   <p className="text-slate-300 font-light">
-                    Everything looks good? Let's launch!
+                    Everything looks good? Let&apos;s launch!
                   </p>
                 </div>
 

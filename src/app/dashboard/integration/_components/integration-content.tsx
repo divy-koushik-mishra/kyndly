@@ -22,8 +22,8 @@ export function IntegrationContent() {
   });
 </script>`;
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(embedCode);
+  const copyToClipboard = async () => {
+    await navigator.clipboard.writeText(embedCode);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
