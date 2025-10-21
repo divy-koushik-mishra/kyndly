@@ -6,14 +6,18 @@ import { Manrope } from "next/font/google";
 import { TRPCReactProvider } from "@/trpc/react";
 import { SessionProvider } from "@/components/providers/session-provider";
 import { auth } from "@/server/auth";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { env } from "@/env.js";
 
 export const metadata: Metadata = {
   title: {
     default: "Kyndly - Review Management Software",
-    template: "%s | Kyndly"
+    template: "%s | Kyndly",
   },
-  description: "Transform customer feedback into powerful social proof with Kyndly. Collect, manage, and display reviews with our plug-and-play system. Boost credibility and conversions - start free today.",
-  keywords: "review management, customer reviews, testimonial software, review widget, customer feedback, review analytics, testimonial management, social proof, review collection",
+  description:
+    "Transform customer feedback into powerful social proof with Kyndly. Collect, manage, and display reviews with our plug-and-play system. Boost credibility and conversions - start free today.",
+  keywords:
+    "review management, customer reviews, testimonial software, review widget, customer feedback, review analytics, testimonial management, social proof, review collection",
   authors: [{ name: "Kyndly" }],
   creator: "Kyndly",
   publisher: "Kyndly",
@@ -33,8 +37,10 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://kyndly.online",
     siteName: "Kyndly",
-    title: "Kyndly - Review Management Software | Collect & Showcase Customer Reviews",
-    description: "Transform customer feedback into powerful social proof with Kyndly. Collect, manage, and display reviews with our plug-and-play system. Boost credibility and conversions - start free today.",
+    title:
+      "Kyndly - Review Management Software | Collect & Showcase Customer Reviews",
+    description:
+      "Transform customer feedback into powerful social proof with Kyndly. Collect, manage, and display reviews with our plug-and-play system. Boost credibility and conversions - start free today.",
     images: [
       {
         url: "https://kyndly.online/images/kyndly-social.png",
@@ -46,15 +52,15 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kyndly - Review Management Software | Collect & Showcase Customer Reviews",
-    description: "Transform customer feedback into powerful social proof with Kyndly. Collect, manage, and display reviews with our plug-and-play system. Boost credibility and conversions - start free today.",
+    title:
+      "Kyndly - Review Management Software | Collect & Showcase Customer Reviews",
+    description:
+      "Transform customer feedback into powerful social proof with Kyndly. Collect, manage, and display reviews with our plug-and-play system. Boost credibility and conversions - start free today.",
     images: ["https://kyndly.online/images/kyndly-social.png"],
     creator: "@kyndly",
   },
   icons: {
-    icon: [
-      { url: "/images/kyndly-logo.png", sizes: "any", type: "image/png" },
-    ],
+    icon: [{ url: "/images/kyndly-logo.png", sizes: "any", type: "image/png" }],
     apple: [
       { url: "/images/kyndly-logo.png", sizes: "180x180", type: "image/png" },
     ],
@@ -84,6 +90,7 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <TRPCReactProvider>{children}</TRPCReactProvider>
         </SessionProvider>
+        <GoogleAnalytics gaId={env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID} />
       </body>
     </html>
   );
