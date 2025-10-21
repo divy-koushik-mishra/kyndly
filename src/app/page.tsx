@@ -17,8 +17,9 @@ import {
   Shield
 } from "lucide-react";
 import Link from "next/link";
+import { auth } from "@/server/auth";
 
-export default function Home() {
+export default async function Home() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -47,6 +48,8 @@ export default function Home() {
     ]
   };
 
+  const userSession = await auth();
+
   return (
     <>
       <SEOHead
@@ -70,11 +73,19 @@ export default function Home() {
             <Link href="/features" className="text-slate-300 hover:text-white transition-colors">Features</Link>
             <Link href="/support" className="text-slate-300 hover:text-white transition-colors">Support</Link>
           </div>
-          <Link href="/sign-up">
-            <Button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-lg">
-              Get Started <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+          {userSession?.user ? (
+            <Link href="/dashboard">
+              <Button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-lg">
+                Go to Dashboard <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/sign-up">
+              <Button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-lg">
+                Get Started <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          )}
         </div>
       </nav>
 
