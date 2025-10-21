@@ -68,7 +68,7 @@ export function OnboardingForm() {
 
       setErrors(newErrors);
       return Object.keys(newErrors).length === 0;
-    } catch (error) {
+    } catch {
       return false;
     }
   };
@@ -100,6 +100,8 @@ export function OnboardingForm() {
           }
         });
         setErrors(fieldErrors);
+      } else {
+        setErrors({ submit: "An unexpected error occurred" });
       }
     }
   };
