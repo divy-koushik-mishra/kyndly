@@ -8,6 +8,7 @@ import { Star } from "lucide-react";
 import { CreateReviewDialog } from "@/components/create-review-dialog";
 import { EditReviewDialog } from "@/components/edit-review-dialog";
 import { DeleteReviewDialog } from "@/components/delete-review-dialog";
+import { TogglePublishedSwitch } from "@/components/toggle-published-switch";
 
 export default async function ReviewsPage() {
   const session = await auth();
@@ -33,6 +34,7 @@ export default async function ReviewsPage() {
     rating: number;
     text: string;
     avatarUrl: string;
+    isPublished: boolean;
     createdAt: Date;
   }> = [];
 
@@ -46,7 +48,7 @@ export default async function ReviewsPage() {
     ? (reviews.reduce((sum, r) => sum + r.rating, 0) / totalReviews).toFixed(1)
     : "0.0";
   const fiveStarCount = reviews.filter(r => r.rating === 5).length;
-  const publishedCount = totalReviews; // All reviews are published
+  const publishedCount = reviews.filter(r => r.isPublished).length;
 
   // Helper function to format date
   const getTimeAgo = (date: Date) => {
@@ -166,19 +168,25 @@ export default async function ReviewsPage() {
                         </p>
 
                         {/* Footer */}
-                        <div className="flex flex-wrap items-center justify-end gap-2 pt-3 border-t border-slate-800">
-                          <EditReviewDialog
-                            review={{
-                              id: review.id,
-                              authorName: review.authorName,
-                              rating: review.rating,
-                              text: review.text,
-                            }}
-                          />
-                          <DeleteReviewDialog
+                        <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-slate-800">
+                          <TogglePublishedSwitch 
                             reviewId={review.id}
-                            authorName={review.authorName}
+                            isPublished={review.isPublished}
                           />
+                          <div className="flex items-center gap-2">
+                            <EditReviewDialog
+                              review={{
+                                id: review.id,
+                                authorName: review.authorName,
+                                rating: review.rating,
+                                text: review.text,
+                              }}
+                            />
+                            <DeleteReviewDialog
+                              reviewId={review.id}
+                              authorName={review.authorName}
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>

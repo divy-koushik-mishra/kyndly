@@ -91,8 +91,11 @@ export const reviewRouter = createTRPCRouter({
         throw new Error("Review not found or access denied");
       }
 
-      return await ctx.db.review.delete({
+      return await ctx.db.review.update({
         where: { id: input.reviewId },
+        data: {
+          isDeleted: true,
+        },
       });
     }),
 
@@ -139,9 +142,40 @@ export const reviewRouter = createTRPCRouter({
       return await ctx.db.review.findMany({
         where: {
           projectId: input.projectId,
+          isDeleted: false,
         },
         orderBy: {
           createdAt: "desc",
+        },
+      });
+    }),
+
+  togglePublished: protectedProcedure
+    .input(
+      z.object({
+        reviewId: z.string(),
+        isPublished: z.boolean(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      // Verify ownership through project
+      const review = await ctx.db.review.findUnique({
+        where: { id: input.reviewId },
+        include: {
+          project: {
+            select: { userId: true },
+          },
+        },
+      });
+
+      if (!review || review.project.userId !== ctx.session.user.id) {
+        throw new Error("Review not found or access denied");
+      }
+
+      return await ctx.db.review.update({
+        where: { id: input.reviewId },
+        data: {
+          isPublished: input.isPublished,
         },
       });
     }),
