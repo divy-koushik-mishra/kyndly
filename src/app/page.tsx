@@ -34,14 +34,14 @@ export const metadata: Metadata = {
         url: "https://kyndly.online/images/kyndly-social.png",
         width: 1200,
         height: 630,
-        alt: "Kyndly - Review Management Software",
+        alt: "Kyndly - Free Review Management Software",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kyndly - Review Management Software | Collect & Showcase Customer Reviews",
-    description: "Transform customer feedback into powerful social proof with Kyndly. Collect, manage, and display reviews with our plug-and-play system. Boost credibility and conversions - start free today.",
+    title: "Kyndly - Free Review Management Software | Collect & Display Customer Reviews",
+    description: "Transform customer feedback into powerful social proof with Kyndly's free review management platform. Collect, manage, and display customer reviews with our simple, plug-and-play system. Start free today.",
     images: ["https://kyndly.online/images/kyndly-social.png"],
   },
   robots: {
@@ -62,7 +62,7 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "Kyndly",
-    "description": "Review management software for collecting and displaying customer testimonials",
+    "description": "Free review management software for collecting and displaying customer testimonials",
     "url": "https://kyndly.online",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web",
@@ -70,7 +70,7 @@ export default async function Home() {
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "USD",
-      "description": "Free trial available"
+      "description": "Free to use"
     },
     "aggregateRating": {
       "@type": "AggregateRating",
@@ -142,13 +142,13 @@ export default async function Home() {
           </h1>
           
           <p className="text-xl md:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-            The plug-and-play review system that helps you collect, manage, and display customer testimonials to boost your credibility and conversions.
+            The free, plug-and-play review management system that helps you collect, manage, and display customer testimonials to boost your credibility and conversions.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/sign-up">
               <Button size="lg" className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-xl text-lg px-8 py-4">
-                Start Free Trial
+                Get Started Free
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
@@ -417,7 +417,7 @@ export default async function Home() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                 <Link href="/sign-up">
                   <Button size="lg" className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-2xl text-lg px-10 py-5 rounded-xl">
-                    Start Free Trial
+                    Get Started Free
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
@@ -436,7 +436,7 @@ export default async function Home() {
                     <CheckCircle className="h-5 w-5 text-emerald-400" />
                   </div>
                   <div className="text-left">
-                    <p className="text-white font-semibold">Free 14-day trial</p>
+                    <p className="text-white font-semibold">Completely free</p>
                     <p className="text-slate-400 text-sm">No credit card required</p>
                   </div>
                 </div>

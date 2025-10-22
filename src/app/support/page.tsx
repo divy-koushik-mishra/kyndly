@@ -2,9 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SEOHead } from "@/components/seo-head";
 import { 
-  MessageSquare, 
   Mail, 
-  Phone, 
   Clock, 
   HelpCircle, 
   BookOpen, 
@@ -56,9 +54,9 @@ export default function SupportPage() {
   return (
     <>
       <SEOHead
-        title="Support - Kyndly Review Management | Help Center & Documentation"
-        description="Get help with Kyndly review management platform. 24/7 support, documentation, and resources to maximize your review collection and display."
-        keywords="review management support, testimonial software help, customer review platform support, review widget help"
+        title="Support - Free Review Management Software | Kyndly Help Center"
+        description="Get help with Kyndly's free review management platform. Email support, documentation, and resources to maximize your review collection and display."
+        keywords="free review management support, testimonial software help, customer review platform support, review widget help, email support"
         canonicalUrl="/support"
         structuredData={structuredData}
       />
@@ -90,7 +88,7 @@ export default function SupportPage() {
             </span>
           </h1>
           <p className="text-xl text-slate-300 mb-12 max-w-3xl mx-auto">
-            Get the support you need to make the most of your review management system. Our team is ready to help you every step of the way.
+            Get the support you need to make the most of your free review management system. Our team is ready to help you every step of the way.
           </p>
         </div>
       </section>
@@ -103,50 +101,22 @@ export default function SupportPage() {
               Get in touch
             </h2>
             <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-              Choose the support method that works best for you
+              Get help with your review management platform
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            <Card className="p-8 bg-slate-900/50 border-slate-700/50 backdrop-blur-xl hover:border-blue-500/50 transition-all duration-300 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mx-auto mb-6">
-                <MessageSquare className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Live Chat</h3>
-              <p className="text-slate-300 mb-6">
-                Get instant help from our support team. Available 24/7 for all users.
-              </p>
-              <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white">
-                Start Chat
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Card>
-
+          <div className="max-w-2xl mx-auto">
             <Card className="p-8 bg-slate-900/50 border-slate-700/50 backdrop-blur-xl hover:border-emerald-500/50 transition-all duration-300 text-center">
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mx-auto mb-6">
                 <Mail className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-white mb-4">Email Support</h3>
               <p className="text-slate-300 mb-6">
-                Send us a detailed message and we&apos;ll respond within 2 hours during business hours.
+                Send us a detailed message and we&apos;ll respond within 24 hours. We&apos;re here to help you get the most out of your free review management platform.
               </p>
               <Button variant="outline" className="w-full border-slate-600 text-slate-300 hover:bg-slate-800">
                 <Mail className="mr-2 h-4 w-4" />
-                support@kyndly.com
-              </Button>
-            </Card>
-
-            <Card className="p-8 bg-slate-900/50 border-slate-700/50 backdrop-blur-xl hover:border-amber-500/50 transition-all duration-300 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mx-auto mb-6">
-                <Phone className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Phone Support</h3>
-              <p className="text-slate-300 mb-6">
-                Speak directly with our support team. Available for Enterprise customers.
-              </p>
-              <Button variant="outline" className="w-full border-slate-600 text-slate-300 hover:bg-slate-800">
-                <Phone className="mr-2 h-4 w-4" />
-                +1 (555) 123-4567
+                support@kyndly.online
               </Button>
             </Card>
           </div>
@@ -181,9 +151,9 @@ export default function SupportPage() {
             </Card>
 
             <Card className="p-6 bg-slate-900/50 border-slate-700/50 backdrop-blur-xl">
-              <h3 className="text-xl font-semibold text-white mb-3">Is there a free trial?</h3>
+              <h3 className="text-xl font-semibold text-white mb-3">Is Kyndly really free?</h3>
               <p className="text-slate-300">
-                Absolutely! We offer a 14-day free trial with full access to all features. No credit card required to get started.
+                Yes! Kyndly is completely free to use. No credit card required, no hidden fees, no time limits. You get full access to all features at no cost.
               </p>
             </Card>
 
@@ -202,9 +172,9 @@ export default function SupportPage() {
             </Card>
 
             <Card className="p-6 bg-slate-900/50 border-slate-700/50 backdrop-blur-xl">
-              <h3 className="text-xl font-semibold text-white mb-3">What happens to my data if I cancel?</h3>
+              <h3 className="text-xl font-semibold text-white mb-3">What happens to my data?</h3>
               <p className="text-slate-300">
-                Your data is always yours. You can export all your reviews and data at any time. We&apos;ll keep your data for 30 days after cancellation in case you want to reactivate.
+                Your data is always yours. Since Kyndly is free, there&apos;s no cancellation to worry about. You can export all your reviews and data at any time, and your data stays with you as long as you need it.
               </p>
             </Card>
           </div>
@@ -269,40 +239,31 @@ export default function SupportPage() {
         </div>
       </section>
 
-      {/* Support Hours */}
+      {/* Support Info */}
       <section className="px-4 py-20 md:px-8 bg-slate-900/30">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 text-sm font-medium mb-8">
             <Clock className="h-4 w-4 mr-2" />
-            Support Hours
+            Support Information
           </div>
           
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            We&apos;re here when you need us
+            We&apos;re here to help
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div className="max-w-2xl mx-auto">
             <div className="p-6 rounded-xl bg-slate-900/50 border border-slate-700/50">
-              <h3 className="text-xl font-semibold text-white mb-4">Live Chat & Email</h3>
-              <p className="text-slate-300 mb-4">Available 24/7 for all users</p>
+              <h3 className="text-xl font-semibold text-white mb-4">Email Support</h3>
+              <p className="text-slate-300 mb-4">We respond to all emails within 24 hours</p>
               <div className="flex items-center justify-center gap-2">
                 <CheckCircle className="h-5 w-5 text-emerald-400" />
-                <span className="text-emerald-400 font-medium">Always Online</span>
-              </div>
-            </div>
-            
-            <div className="p-6 rounded-xl bg-slate-900/50 border border-slate-700/50">
-              <h3 className="text-xl font-semibold text-white mb-4">Phone Support</h3>
-              <p className="text-slate-300 mb-4">Monday - Friday, 9 AM - 6 PM EST</p>
-              <div className="flex items-center justify-center gap-2">
-                <Clock className="h-5 w-5 text-blue-400" />
-                <span className="text-blue-400 font-medium">Business Hours</span>
+                <span className="text-emerald-400 font-medium">Reliable Support</span>
               </div>
             </div>
           </div>
           
-          <p className="text-slate-400">
-            Enterprise customers get priority support with dedicated account managers and faster response times.
+          <p className="text-slate-400 mt-8">
+            Since Kyndly is completely free, we provide email support to help you get the most out of your review management platform.
           </p>
         </div>
       </section>

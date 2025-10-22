@@ -9,9 +9,7 @@ import {
   Zap, 
   Shield, 
   Settings,
-  Download,
   Filter,
-  Bell,
   Heart,
   ArrowRight,
   CheckCircle,
@@ -21,20 +19,20 @@ import Link from "next/link";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Features - Review Management Software | Kyndly",
-  description: "Discover Kyndly's comprehensive review management features. Collect, analyze, and display customer reviews with advanced tools for review collection, analytics, widgets, and moderation.",
-  keywords: "review management features, testimonial software features, review collection tools, review analytics, review widgets, customer feedback management",
+  title: "Features - Free Review Management Software | Kyndly",
+  description: "Discover Kyndly's free review management features. Collect, analyze, and display customer reviews with our comprehensive tools for review collection, analytics, widgets, and moderation.",
+  keywords: "free review management features, testimonial software features, review collection tools, review analytics, review widgets, customer feedback management, free review platform",
   openGraph: {
-    title: "Features - Review Management Software | Kyndly",
-    description: "Discover Kyndly's comprehensive review management features. Collect, analyze, and display customer reviews with advanced tools for review collection, analytics, widgets, and moderation.",
+    title: "Features - Free Review Management Software | Kyndly",
+    description: "Discover Kyndly's free review management features. Collect, analyze, and display customer reviews with our comprehensive tools for review collection, analytics, widgets, and moderation.",
     url: "https://kyndly.online/features",
     siteName: "Kyndly",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Features - Review Management Software | Kyndly",
-    description: "Discover Kyndly's comprehensive review management features. Collect, analyze, and display customer reviews with advanced tools for review collection, analytics, widgets, and moderation.",
+    title: "Features - Free Review Management Software | Kyndly",
+    description: "Discover Kyndly's free review management features. Collect, analyze, and display customer reviews with our comprehensive tools for review collection, analytics, widgets, and moderation.",
   },
   alternates: {
     canonical: "https://kyndly.online/features",
@@ -108,7 +106,7 @@ export default function FeaturesPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/sign-up">
                 <Button size="lg" className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-xl text-lg px-8 py-4">
-                  Start Free Trial
+                  Get Started Free
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
@@ -238,15 +236,15 @@ export default function FeaturesPage() {
           </div>
         </section>
 
-        {/* Advanced Features */}
+        {/* Additional Features */}
         <section className="px-4 py-20 md:px-8 bg-slate-900/30">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                Advanced Features
+                Additional Features
               </h2>
               <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-                Take your review management to the next level with our advanced tools and integrations
+                Everything you need to manage your reviews effectively
               </p>
             </div>
 
@@ -257,14 +255,14 @@ export default function FeaturesPage() {
                     <Settings className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-white mb-4">Custom Branding</h3>
+                    <h3 className="text-xl font-semibold text-white mb-4">Project Organization</h3>
                     <p className="text-slate-300 mb-4">
-                      Customize the look and feel of your review widgets to match your brand perfectly.
+                      Organize your reviews by projects and manage multiple apps from one dashboard.
                     </p>
                     <ul className="space-y-2 text-sm text-slate-400">
-                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Custom colors and fonts</li>
-                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Logo integration</li>
-                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Layout customization</li>
+                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Multiple projects</li>
+                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Easy project switching</li>
+                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Organized dashboard</li>
                     </ul>
                   </div>
                 </div>
@@ -273,55 +271,17 @@ export default function FeaturesPage() {
               <Card className="p-8 bg-slate-900/50 border-slate-700/50 backdrop-blur-xl">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center flex-shrink-0">
-                    <Bell className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-4">Automated Notifications</h3>
-                    <p className="text-slate-300 mb-4">
-                      Stay informed with automated notifications for new reviews, moderation alerts, and performance updates.
-                    </p>
-                    <ul className="space-y-2 text-sm text-slate-400">
-                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Email notifications</li>
-                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Slack integration</li>
-                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Custom alert rules</li>
-                    </ul>
-                  </div>
-                </div>
-              </Card>
-
-              <Card className="p-8 bg-slate-900/50 border-slate-700/50 backdrop-blur-xl">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0">
-                    <Download className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-4">Data Export</h3>
-                    <p className="text-slate-300 mb-4">
-                      Export your review data in multiple formats for analysis, reporting, and backup purposes.
-                    </p>
-                    <ul className="space-y-2 text-sm text-slate-400">
-                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />CSV and JSON export</li>
-                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Scheduled exports</li>
-                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />API data access</li>
-                    </ul>
-                  </div>
-                </div>
-              </Card>
-
-              <Card className="p-8 bg-slate-900/50 border-slate-700/50 backdrop-blur-xl">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center flex-shrink-0">
                     <Shield className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-white mb-4">Security & Compliance</h3>
+                    <h3 className="text-xl font-semibold text-white mb-4">Simple & Secure</h3>
                     <p className="text-slate-300 mb-4">
-                      Enterprise-grade security with GDPR compliance, data encryption, and audit trails.
+                      Your data is secure and your experience is simple. No complex configurations needed.
                     </p>
                     <ul className="space-y-2 text-sm text-slate-400">
-                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />GDPR compliance</li>
-                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Data encryption</li>
-                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Audit logs</li>
+                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Secure data storage</li>
+                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Simple interface</li>
+                      <li className="flex items-center"><CheckCircle className="h-4 w-4 mr-2 text-green-400" />Easy to use</li>
                     </ul>
                   </div>
                 </div>
@@ -337,7 +297,7 @@ export default function FeaturesPage() {
               Ready to get started?
             </h2>
             <p className="text-xl text-slate-300 mb-8">
-              Experience all these features with our 14-day free trial. No credit card required.
+              Experience all these features completely free. No credit card required.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/sign-up">
