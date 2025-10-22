@@ -9,6 +9,7 @@ import { CreateReviewDialog } from "@/components/create-review-dialog";
 import { EditReviewDialog } from "@/components/edit-review-dialog";
 import { DeleteReviewDialog } from "@/components/delete-review-dialog";
 import { TogglePublishedSwitch } from "@/components/toggle-published-switch";
+import { LinkReviewToAppsDialog } from "@/components/link-review-to-apps-dialog";
 
 export default async function ReviewsPage() {
   const session = await auth();
@@ -174,6 +175,15 @@ export default async function ReviewsPage() {
                             isPublished={review.isPublished}
                           />
                           <div className="flex items-center gap-2">
+                            {selectedProjectId && (
+                              <LinkReviewToAppsDialog
+                                review={{
+                                  id: review.id,
+                                  authorName: review.authorName,
+                                }}
+                                projectId={selectedProjectId}
+                              />
+                            )}
                             <EditReviewDialog
                               review={{
                                 id: review.id,

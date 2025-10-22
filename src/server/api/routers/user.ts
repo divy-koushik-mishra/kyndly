@@ -42,12 +42,31 @@ export const userRouter = createTRPCRouter({
             projectName: input.projectName,
           },
         });
+        
+        // Generate slug from app name
+        const generateSlug = (name: string) => {
+          return name
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+        };
+        
+        let slug = generateSlug(input.appConfig.name);
+        let slugSuffix = 0;
+        
+        // Check if slug exists and make it unique
+        while (await tx.app.findUnique({ where: { slug } })) {
+          slugSuffix++;
+          slug = `${generateSlug(input.appConfig.name)}-${slugSuffix}`;
+        }
+        
         await tx.app.create({
           data: {
             projectId: project.id,
             platform: input.appConfig.platform,
             domain: input.appConfig.domain,
             name: input.appConfig.name,
+            slug,
           },
         });
       });
@@ -88,6 +107,8 @@ export const userRouter = createTRPCRouter({
           updatedAt: true,
           logoUrl: true,
           description: true,
+          slug: true,
+          isFormPublic: true,
         },
         orderBy: {
           createdAt: "desc",

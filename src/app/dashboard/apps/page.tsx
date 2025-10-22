@@ -7,6 +7,7 @@ import { MoreVertical, ExternalLink } from "lucide-react";
 import { api } from "@/trpc/server";
 import { CreateAppDialog } from "@/components/create-app-dialog";
 import { AppSettingsDialog } from "@/components/app-settings-dialog";
+import { AppFormSettingsDialog } from "@/components/app-form-settings-dialog";
 import { Button } from "@/components/ui/button";
 
 export default async function AppsPage() {
@@ -30,6 +31,8 @@ export default async function AppsPage() {
     updatedAt: Date;
     logoUrl: string | null;
     description: string | null;
+    slug: string | null;
+    isFormPublic: boolean;
   }> = [];
 
   if (selectedProjectId) {
@@ -143,6 +146,14 @@ export default async function AppsPage() {
                             platform: app.platform,
                             domain: app.domain,
                             description: app.description,
+                          }}
+                        />
+                        <AppFormSettingsDialog
+                          app={{
+                            id: app.id,
+                            name: app.name,
+                            slug: app.slug,
+                            isFormPublic: app.isFormPublic,
                           }}
                         />
                         <Button
